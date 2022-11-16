@@ -22,7 +22,7 @@ xlabel('t');
 ylabel('ya(t)');
 
 subplot(3,1,3);
-plot(t, y(:, 1), t, d, 'g');
+plot(t, y(:, 1), t, d, 'g--');
 
 title('obe spolu');
 xlabel('t');
