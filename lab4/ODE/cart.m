@@ -1,4 +1,4 @@
-function dXdt = cart(t, X)
+ function dXdt = cart(t, X)
     global u m kt kp;
 
     X1 = X(1);
