@@ -14,7 +14,7 @@ function [sys] = convert()
         case 2 %  State space
             [num, den] = tfdata(sys, 'v');
             [a, b, c, d] = tf2ss(num, den);
-            
+
             disp(a);
             disp(b);
             disp(c);
