@@ -11,12 +11,36 @@ tRange(1) = 0;
 d = analyt(t);
 
 % ode45
-plot(t, y(:, 1));
-hold on
-% analyt
-plot(t, d, 'r.', "LineWidth", 4);
+subplot(4,1,1);
+plot(t, y(:, 1), 'b');
+title('ode45');
+xlabel('t');
+ylabel('y(t)');
 
-hold on
+subplot(4,1,2);
+% analyt
+plot(t, d, 'r--');
+title('analytical');
+xlabel('t');
+ylabel('y(t)');
+
 % simulink
-plot(out.y.Time, out.y.Data, 'b--');
+subplot(4,1,3);
+plot(out.y.Time, out.y.Data, 'g--');
+title('simulink');
+xlabel('t');
+ylabel('y(t)');
+
+% all
+subplot(4,1,4);
+plot(t, y(:, 1), 'b');
+hold on
+plot(t, d, 'r--');
+plot(out.y.Time, out.y.Data, 'g--');
+
+title('All');
+xlabel('t');
+ylabel('y(t)');
+
 hold off
+

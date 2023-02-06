@@ -8,9 +8,7 @@ x0 = input("Enter start conditions x0 = "); % [0; 0]
 
 tSpan = [0 20];
 
-[t, x] = ode23('cart', tSpan, x0);
-
-display(x);
+[t, x] = ode45('cart', tSpan, x0);
 
 plot(t, x(:, 1), 'b-', t, x(:, 2), 'r--');
 grid on
