@@ -30,9 +30,11 @@ Y0 = [1; 0];
 tspan = [0 10];
 [t, Y] = ode45(@(t,Y) linearized_system(t, Y, J_eq), tspan, Y0);
 
+
 figure(Name="Spring Damper");
 
-subplot(1, 2, 1);
+% Linear
+subplot(2, 1, 1);
 plot(t, Y(:,1), 'r', t, Y(:,2), 'b');
 legend('y (displacement)', 'y'' (velocity)');
 title('Dynamics of the Linearized Spring-Damper System');
@@ -41,21 +43,31 @@ ylabel('States');
 grid on;
 
 [t, Y] = ode45(@(t,y) ode_system(t, y, m_input, c_input, k_input), tspan, Y0);
+[t_rk, Y_rk] = RK(@(t,y) ode_system(t, y, m_input, c_input, k_input), Y0, tspan, 0.1);
 
-subplot(1, 2, 2);
+% Non-linear
+subplot(2, 1, 2);
 plot(t, Y(:,1), 'r', t, Y(:,2), 'b');
-legend('y (displacement)', 'y'' (velocity)');
 title('Dynamics of the Spring-Damper System');
 xlabel('Time (s)');
 ylabel('States');
 grid on;
 
-initial_conditions = [0 0; 1 0; -1 0; 0.5 0; -0.5 0]; % Different initial conditions for spring-damper
+hold on;
+plot(t_rk, Y_rk(:, 1), '--r', LineWidth=2);
+plot(t_rk, Y_rk(:, 2), '--b', LineWidth=2);
+hold off;
+
+legend('y (displacement)', 'y'' (velocity)', 'RK y (displacement)', 'RK y'' (velocity)');
+
+% Different initial conditions for spring-damper
+initial_conditions = [0 0; 1 0; -1 0; 0.5 0; -0.5 0]; 
 figure(Name="Phase Portrait");
 
 for i = 1:size(initial_conditions, 1)
     y0 = initial_conditions(i,:);
-    [t, y] = ode45(@(t, y) [y(2); -(c_input/m_input)*y(2) - (k_input/m_input)*y(1)], tspan, y0); % State equations for spring-damper
+    % State equations for spring-damper
+    [t, y] = ode45(@(t, y) [y(2); -(c_input/m_input)*y(2) - (k_input/m_input)*y(1)], tspan, y0);
     plot(y(:,1), y(:,2));
     hold on;
 end
